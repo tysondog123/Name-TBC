@@ -10,13 +10,25 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       rb = GetComponent<Rigidbody2D>(); 
+       rb = GetComponent<Rigidbody2D>();
+      
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            //Dash();
+        }
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+           Movement();
+        }
+        
+        
+        
+
         if (CanJump > 0)
         {
             Jump();    
@@ -28,10 +40,7 @@ public class PlayerController : MonoBehaviour
         float Hor = Input.GetAxis("Horizontal");
         
         rb.linearVelocityX = Hor*MoveSpeed;
-        if (Input.GetButtonDown("Dash"))
-        {
-            rb.linearVelocityX = (Hor*MoveSpeed)*DashSpeed;
-        }
+        
     }
     
     public void Jump()
@@ -41,6 +50,15 @@ public class PlayerController : MonoBehaviour
             rb.AddForceY(Jumpforce, ForceMode2D.Impulse);
             CanJump--;
         }
+    }
+
+    public void Dash()
+    {
+      
+      Vector2 DashVec = new Vector2(1,0);
+      rb.AddForceX(rb.linearVelocityX+ 1*DashSpeed,ForceMode2D.Impulse); 
+      Debug.Log(DashVec * DashSpeed);
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
