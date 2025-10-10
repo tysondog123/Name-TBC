@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public float MoveSpeed;
     public float CanJump=2;
     public float DashSpeed;
+
+    public int HP;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,9 +27,6 @@ public class PlayerController : MonoBehaviour
         {
            Movement();
         }
-        
-        
-        
 
         if (CanJump > 0)
         {
@@ -47,6 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump"))
         {
+            rb.linearVelocityY = 0;
             rb.AddForceY(Jumpforce, ForceMode2D.Impulse);
             CanJump--;
         }
