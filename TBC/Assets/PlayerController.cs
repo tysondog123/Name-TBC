@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public float DashSpeed;
 
     public int HP;
+    public float IVFrames;
+    public float IVTimer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +21,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        if(IVTimer > 0) 
+        {
+            IVTimer -= Time.deltaTime;
+            if(IVTimer < 0)
+            {
+                IVTimer = 0;
+
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             //Dash();
@@ -66,6 +79,21 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.CompareTag("Floor"))
         {
             CanJump = 2;
+        }
+    }
+
+
+    public void TakeDamage(int Damage)
+    {
+        Debug.Log("Collision");
+        if (IVTimer <= 0)
+        {
+            IVTimer = IVFrames;
+            HP -= Damage;
+        }
+        else
+        {
+            Debug.Log("Cant Hit");
         }
     }
 }
